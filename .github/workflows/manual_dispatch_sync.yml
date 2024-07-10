@@ -6,7 +6,7 @@ on:
       sync_rules_from_elastic:
         description: 'Sync rules from Elastic Security (true/false)'
         required: true
-        default: 'false'
+        default: 'true'
 
 jobs:
   manual-dispatch-sync:
@@ -33,7 +33,7 @@ jobs:
     - name: Export and Import Rules if flag is true
       if: ${{ github.event.inputs.sync_rules_from_elastic == 'true' }}
       run: |
-        python -m detection_rules kibana --cloud-id ${{ secrets.CLOUD_ID }} -ku ${{ secrets.KIBANA_USERNAME }} -kp ${{ secrets.KIBANA_PASSWORD }} export-rules -d custom-rules -s 
+        python -m detection_rules kibana --cloud-id ${{ secrets.CLOUD_ID }} -ku ${{ secrets.KIBANA_USERNAME }} -kp ${{ secrets.KIBANA_PASSWORD }} export-rules -d custom_rules -s 
 
     - name: Create Pull Request
       if: ${{ github.event.inputs.sync_rules_from_elastic == 'true' }}
